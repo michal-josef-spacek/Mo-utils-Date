@@ -185,6 +185,7 @@ Returns undef.
 
  check_date():
          Parameter '%s' for date is in bad format.
+                 Value: %s
          Parameter '%s' has year greater than actual year.
 
  check_date_dmy():
