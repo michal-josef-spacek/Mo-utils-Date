@@ -5,10 +5,11 @@ use strict;
 use warnings;
 
 use DateTime;
+use English;
 use Error::Pure qw(err);
 use Readonly;
 
-Readonly::Array our @EXPORT_OK => qw(check_date check_date_order);
+Readonly::Array our @EXPORT_OK => qw(check_date check_date_dmy check_date_order);
 
 our $VERSION = 0.02;
 
@@ -34,6 +35,40 @@ sub check_date {
 	# Check year greater than actual.
 	if ($year > DateTime->now->year) {
 		err "Parameter '$key' has year greater than actual year.";
+	}
+
+	return;
+}
+
+sub check_date_dmy {
+	my ($self, $key) = @_;
+
+	if (! exists $self->{$key}) {
+		return;
+	}
+
+	if (! defined $self->{$key}) {
+		return;
+	}
+
+	if ($self->{'date'} !~ m/^(\d{1,2}).(\d{1,2}).(\d{4})$/ms) {
+		err "Parameter 'date' is in bad format.",
+			'Value', $self->{$key},
+		;
+	}
+	my ($day, $month, $year) = ($1, $2, $3);
+	eval {
+		DateTime->new(
+			'day' => $1,
+			'month' => $2,
+			'year' => $3,
+		);
+	};
+	if ($EVAL_ERROR) {
+		err "Parameter 'date' is bad date.",
+			'Value' => $self->{$key},
+			'DateTime error', $EVAL_ERROR,
+		;
 	}
 
 	return;
@@ -93,6 +128,7 @@ Mo::utils::Date - Mo date utilities.
  use Mo::utils::Date qw(check_date);
 
  check_date($self, $key);
+ check_date_dmy($self, $key);
  check_date_order($self, $key1, $key2);
 
 =head1 DESCRIPTION
@@ -119,6 +155,22 @@ Put error if check isn't ok.
 
 Returns undef.
 
+=head2 C<check_date_dmy>
+
+ check_date_dmy($self, $key);
+
+Check parameter defined by C<$key> which is date in right format.
+
+Possible dates.
+ - D.M.YYYY
+ - DD.MM.YYYY
+
+Date is checked via L<DateTime> if is real.
+
+Put error if check isn't ok.
+
+Returns undef.
+
 =head2 C<check_date_order>
 
  check_date_order($self, $key1, $key2);
@@ -134,6 +186,13 @@ Returns undef.
  check_date():
          Parameter '%s' for date is in bad format.
          Parameter '%s' has year greater than actual year.
+
+ check_date_dmy():
+         Parameter '%s' for date is in bad format.
+                 Value: %s
+         Parameter '%s' is bad date.
+                 Value: %s
+                 DateTime error: %s
 
  check_date_order():
          Parameter '%s' has date greater or same as parameter '%s' date.
@@ -184,6 +243,7 @@ Returns undef.
 =head1 DEPENDENCIES
 
 L<DateTime>,
+L<English>,
 L<Exporter>,
 L<Error::Pure>,
 L<Readonly>.

@@ -19,6 +19,7 @@ perl_version 5.006002;
 readme_from 'Date.pm';
 recursive_author_tests('xt');
 requires 'DateTime' => 0;
+requires 'English' => 0;
 requires 'Error::Pure' => 0.15;
 requires 'Exporter' => 0;
 requires 'Readonly' => 0;

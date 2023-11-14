@@ -5,6 +5,7 @@ SYNOPSIS
      use Mo::utils::Date qw(check_date);
 
      check_date($self, $key);
+     check_date_dmy($self, $key);
      check_date_order($self, $key1, $key2);
 
 DESCRIPTION
@@ -23,6 +24,19 @@ SUBROUTINES
 
     Returns undef.
 
+  "check_date_dmy"
+     check_date_dmy($self, $key);
+
+    Check parameter defined by $key which is date in right format.
+
+    Possible dates. - D.M.YYYY - DD.MM.YYYY
+
+    Date is checked via DateTime if is real.
+
+    Put error if check isn't ok.
+
+    Returns undef.
+
   "check_date_order"
      check_date_order($self, $key1, $key2);
 
@@ -36,6 +50,13 @@ ERRORS
      check_date():
              Parameter '%s' for date is in bad format.
              Parameter '%s' has year greater than actual year.
+
+     check_date_dmy():
+             Parameter '%s' for date is in bad format.
+                     Value: %s
+             Parameter '%s' is bad date.
+                     Value: %s
+                     DateTime error: %s
 
      check_date_order():
              Parameter '%s' has date greater or same as parameter '%s' date.
@@ -78,7 +99,7 @@ EXAMPLE2
      # #Error [..Utils.pm:?] Parameter 'key' is in bad format.
 
 DEPENDENCIES
-    DateTime, Exporter, Error::Pure, Readonly.
+    DateTime, English, Exporter, Error::Pure, Readonly.
 
 SEE ALSO
     Mo::utils
