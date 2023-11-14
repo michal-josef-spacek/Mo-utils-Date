@@ -1,6 +1,6 @@
 Changes
 Date.pm
-examples/check_date_error.pl
+examples/check_date_fail.pl
 examples/check_date_ok.pl
 inc/Module/Install.pm
 inc/Module/Install/AuthorRequires.pm

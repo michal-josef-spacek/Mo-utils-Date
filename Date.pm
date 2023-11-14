@@ -220,7 +220,7 @@ Returns undef.
 
 =head1 EXAMPLE2
 
-=for comment filename=check_date_error.pl
+=for comment filename=check_date_fail.pl
 
  use strict;
  use warnings;
