@@ -1,5 +1,6 @@
 0.02
  - Add check_date_dmy().
+ - Fix test dependencies.
  - Improve ERRORS section in doc.
 
 0.01 2023-11-14T08:47:19+01:00
