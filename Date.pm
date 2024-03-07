@@ -51,8 +51,8 @@ sub check_date_dmy {
 		return;
 	}
 
-	if ($self->{'date'} !~ m/^(\d{1,2}).(\d{1,2}).(\d{4})$/ms) {
-		err "Parameter 'date' is in bad format.",
+	if ($self->{$key} !~ m/^(\d{1,2}).(\d{1,2}).(\d{4})$/ms) {
+		err "Parameter '$key' is in bad format.",
 			'Value', $self->{$key},
 		;
 	}
@@ -65,7 +65,7 @@ sub check_date_dmy {
 		);
 	};
 	if ($EVAL_ERROR) {
-		err "Parameter 'date' is bad date.",
+		err "Parameter '$key' is bad date.",
 			'Value' => $self->{$key},
 			'DateTime error', $EVAL_ERROR,
 		;
