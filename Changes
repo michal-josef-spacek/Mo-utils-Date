@@ -1,4 +1,5 @@
 0.03
+ - Add check_date_ddmmyy() check.
  - Fix check_date_dmy() check.
  - Update copyright years.
 

@@ -9,7 +9,7 @@ use English;
 use Error::Pure qw(err);
 use Readonly;
 
-Readonly::Array our @EXPORT_OK => qw(check_date check_date_dmy check_date_order);
+Readonly::Array our @EXPORT_OK => qw(check_date check_date_dmy check_date_ddmmyy check_date_order);
 
 our $VERSION = 0.03;
 
@@ -62,6 +62,40 @@ sub check_date_dmy {
 			'day' => $1,
 			'month' => $2,
 			'year' => $3,
+		);
+	};
+	if ($EVAL_ERROR) {
+		err "Parameter '$key' is bad date.",
+			'Value' => $self->{$key},
+			'DateTime error', $EVAL_ERROR,
+		;
+	}
+
+	return;
+}
+
+sub check_date_ddmmyy {
+	my ($self, $key) = @_;
+
+	if (! exists $self->{$key}) {
+		return;
+	}
+
+	if (! defined $self->{$key}) {
+		return;
+	}
+
+	if ($self->{$key} !~ m/^(\d{2})(\d{2})(\d{2})$/ms) {
+		err "Parameter '$key' is in bad date format.",
+			'Value', $self->{$key},
+		;
+	}
+	my ($day, $month, $year) = ($1, $2, $3);
+	eval {
+		DateTime->new(
+			'day' => $1,
+			'month' => $2,
+			'year' => 2000 + $3,
 		);
 	};
 	if ($EVAL_ERROR) {
@@ -129,6 +163,7 @@ Mo::utils::Date - Mo date utilities.
 
  check_date($self, $key);
  check_date_dmy($self, $key);
+ check_date_ddmmyy($self, $key);
  check_date_order($self, $key1, $key2);
 
 =head1 DESCRIPTION
@@ -171,6 +206,23 @@ Put error if check isn't ok.
 
 Returns undef.
 
+=head2 C<check_date_ddmmyy>
+
+ check_date_ddmmyy($self, $key);
+
+Check parameter defined by C<$key> which is date in ddmmyy format.
+
+Possible dates.
+ - DDMMYY
+
+Function is working only for date years > 2000.
+
+Date is checked via L<DateTime> if it is real.
+
+Put error if check isn't ok.
+
+Returns undef.
+
 =head2 C<check_date_order>
 
  check_date_order($self, $key1, $key2);
@@ -190,6 +242,13 @@ Returns undef.
 
  check_date_dmy():
          Parameter '%s' for date is in bad format.
+                 Value: %s
+         Parameter '%s' is bad date.
+                 Value: %s
+                 DateTime error: %s
+
+ check_date_ddmmyy():
+         Parameter '%s' for date is in bad date format.
                  Value: %s
          Parameter '%s' is bad date.
                  Value: %s
@@ -240,6 +299,49 @@ Returns undef.
 
  # Output like:
  # #Error [..Utils.pm:?] Parameter 'key' is in bad format.
+
+=head1 EXAMPLE3
+
+=for comment filename=check_date_ddmmyy_ok.pl
+
+ use strict;
+ use warnings;
+
+ use Mo::utils::Date qw(check_date_ddmmyy);
+
+ my $self = {
+         'key' => '151120',
+ };
+ check_date_ddmmyy($self, 'key');
+
+ # Print out.
+ print "ok\n";
+
+ # Output:
+ # ok
+
+=head1 EXAMPLE4
+
+=for comment filename=check_date_ddmmyy_fail.pl
+
+ use strict;
+ use warnings;
+
+ use Error::Pure;
+ use Mo::utils::Date qw(check_date_ddmmyy);
+
+ $Error::Pure::TYPE = 'Error';
+
+ my $self = {
+         'key' => 'foo',
+ };
+ check_date_ddmmyy($self, 'key');
+
+ # Print out.
+ print "ok\n";
+
+ # Output like:
+ # #Error [..Utils.pm:?] Parameter 'key' for date is in bad format.
 
 =head1 DEPENDENCIES
 
