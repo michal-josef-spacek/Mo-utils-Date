@@ -176,6 +176,8 @@ Utilities for checking of data values.
 
  check_date($self, $key);
 
+I<Since version 0.01. Described functionality since version 0.02.>
+
 Check parameter defined by C<$key> which is date and that date isn't greater
 than actual year.
 
@@ -194,6 +196,8 @@ Returns undef.
 
  check_date_dmy($self, $key);
 
+I<Since version 0.02. Described functionality since version 0.03.>
+
 Check parameter defined by C<$key> which is date in right format.
 
 Possible dates.
@@ -209,6 +213,8 @@ Returns undef.
 =head2 C<check_date_ddmmyy>
 
  check_date_ddmmyy($self, $key);
+
+I<Since version 0.03.>
 
 Check parameter defined by C<$key> which is date in ddmmyy format.
 
@@ -226,6 +232,8 @@ Returns undef.
 =head2 C<check_date_order>
 
  check_date_order($self, $key1, $key2);
+
+I<Since version 0.01. Described functionality since version 0.02.>
 
 Check if date with C<$key1> is lesser than date with C<$key2>.
 

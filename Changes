@@ -1,5 +1,6 @@
 0.03
  - Add check_date_ddmmyy() check.
+ - Add information about check add to doc.
  - Fix check_date_dmy() check.
  - Update copyright years.
 

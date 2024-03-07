@@ -16,6 +16,8 @@ SUBROUTINES
   "check_date"
      check_date($self, $key);
 
+    *Since version 0.01. Described functionality since version 0.02.*
+
     Check parameter defined by $key which is date and that date isn't
     greater than actual year.
 
@@ -27,6 +29,8 @@ SUBROUTINES
 
   "check_date_dmy"
      check_date_dmy($self, $key);
+
+    *Since version 0.02. Described functionality since version 0.03.*
 
     Check parameter defined by $key which is date in right format.
 
@@ -40,6 +44,8 @@ SUBROUTINES
 
   "check_date_ddmmyy"
      check_date_ddmmyy($self, $key);
+
+    *Since version 0.03.*
 
     Check parameter defined by $key which is date in ddmmyy format.
 
@@ -55,6 +61,8 @@ SUBROUTINES
 
   "check_date_order"
      check_date_order($self, $key1, $key2);
+
+    *Since version 0.01. Described functionality since version 0.02.*
 
     Check if date with $key1 is lesser than date with $key2.
 
