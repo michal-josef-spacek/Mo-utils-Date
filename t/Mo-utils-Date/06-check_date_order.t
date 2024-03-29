@@ -5,7 +5,7 @@ use DateTime;
 use English;
 use Error::Pure::Utils qw(clean);
 use Mo::utils::Date qw(check_date_order);
-use Test::More 'tests' => 8;
+use Test::More 'tests' => 12;
 use Test::NoWarnings;
 
 # Test.
@@ -39,6 +39,34 @@ $self = {
 };
 $ret = check_date_order($self, 'date1', 'date2');
 is($ret, undef, "Date '-600' is lesser than date '-500' (DateTime objects).");
+
+# Test.
+$self = {};
+$ret = check_date_order($self, 'date1', 'date2');
+is($ret, undef, "Date keys doesn't exist.");
+
+# Test.
+$self = {
+	'date1' => 2024,
+};
+$ret = check_date_order($self, 'date1', 'date2');
+is($ret, undef, "Second date key doesn't exist.");
+
+# Test.
+$self = {
+	'date1' => undef,
+	'date2' => 2024,
+};
+$ret = check_date_order($self, 'date1', 'date2');
+is($ret, undef, 'First date value is undefined.');
+
+# Test.
+$self = {
+	'date1' => 2024,
+	'date2' => undef,
+};
+$ret = check_date_order($self, 'date1', 'date2');
+is($ret, undef, 'Second date value is undefined.');
 
 # Test.
 $self = {
