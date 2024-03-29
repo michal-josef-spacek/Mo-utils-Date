@@ -119,8 +119,17 @@ sub check_date_order {
 		return;
 	}
 
-	my $dt1 = _construct_dt($self->{$key1});
-	my $dt2 = _construct_dt($self->{$key2});
+	my ($dt1, $dt2);
+	if (ref $self->{$key1} eq 'DateTime') {
+		$dt1 = $self->{$key1};
+	} else {
+		$dt1 = _construct_dt($self->{$key1});
+	}
+	if (ref $self->{$key2} eq 'DateTime') {
+		$dt2 = $self->{$key2};
+	} else {
+		$dt2 = _construct_dt($self->{$key2});
+	}
 
 	my $cmp = DateTime->compare($dt1, $dt2);
 
@@ -233,9 +242,23 @@ Returns undef.
 
  check_date_order($self, $key1, $key2);
 
-I<Since version 0.01. Described functionality since version 0.02.>
+I<Since version 0.01. Described functionality since version 0.04.>
 
 Check if date with C<$key1> is lesser than date with C<$key2>.
+
+Possible date formats:
+
+=over
+
+=item * YYYY-MM-DD
+
+=item * -YYYY-MM-DD
+
+=item * YEAR
+
+=item * L<DateTime> object
+
+=back
 
 Put error if check isn't ok.
 
