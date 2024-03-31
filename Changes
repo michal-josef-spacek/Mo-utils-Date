@@ -2,6 +2,7 @@
  - Add error checks to check_date_order().
  - Add possibility to use check_date_order() on DateTime objects.
  - Add tests for check_date().
+ - Add tests for check_date_dmy().
  - Add tests for check_date_order().
  - Rewrite "," to "=>" in err().
 

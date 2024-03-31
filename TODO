@@ -1,7 +1,6 @@
 TODO
 ====
 1. Example for check_date_order to doc.
-2. Test coverage.
 3. Example for check_date_dmy to doc.
 4. Rename check_date to something better?
 check_date_ymd() and what about <actual year?
@@ -9,3 +8,5 @@ check_date_ymd() and what about <actual year?
 
 Applied
 =======
+2. Test coverage.
+OK [20240331] skim
