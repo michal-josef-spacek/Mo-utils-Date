@@ -27,7 +27,7 @@ sub check_date {
 	# Check year format.
 	if ($self->{$key} !~ m/^\-?(\d{1,4})\-?\d{0,2}\-?\d{0,2}$/ms) {
 		err "Parameter '$key' is in bad format.",
-			'Value', $self->{$key},
+			'Value' => $self->{$key},
 		;
 	}
 	my $year = $1;
@@ -53,7 +53,7 @@ sub check_date_dmy {
 
 	if ($self->{$key} !~ m/^(\d{1,2}).(\d{1,2}).(\d{4})$/ms) {
 		err "Parameter '$key' is in bad format.",
-			'Value', $self->{$key},
+			'Value' => $self->{$key},
 		;
 	}
 	my ($day, $month, $year) = ($1, $2, $3);
@@ -67,7 +67,7 @@ sub check_date_dmy {
 	if ($EVAL_ERROR) {
 		err "Parameter '$key' is bad date.",
 			'Value' => $self->{$key},
-			'DateTime error', $EVAL_ERROR,
+			'DateTime error' => $EVAL_ERROR,
 		;
 	}
 
@@ -101,7 +101,7 @@ sub check_date_ddmmyy {
 	if ($EVAL_ERROR) {
 		err "Parameter '$key' is bad date.",
 			'Value' => $self->{$key},
-			'DateTime error', $EVAL_ERROR,
+			'DateTime error' => $EVAL_ERROR,
 		;
 	}
 
