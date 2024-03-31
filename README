@@ -101,6 +101,11 @@ ERRORS
                      DateTime error: %s
 
      check_date_order():
+             Cannot parse date/time string.
+                     Value: %s
+             Cannot construct DateTime object from date.
+                     Value: %s
+                     DateTime error: %s
              Parameter '%s' has date greater or same as parameter '%s' date.
 
 EXAMPLE1

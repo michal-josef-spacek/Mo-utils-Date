@@ -144,12 +144,27 @@ sub check_date_order {
 sub _construct_dt {
 	my $date = shift;
 
-	my ($year, $month, $day) = $date =~ m/^(\-?\d{1,4})\-?(\d{0,2})\-?(\d{0,2})$/ms;
-	my $dt = DateTime->new(
-		'year' => $year,
-		$month ? ('month' => $month) : (),
-		$day ? ('day' => $day) : (),
-	);
+	my ($year, $month, $day);
+	if ($date =~ m/^(\-?\d{1,4})\-?(\d{0,2})\-?(\d{0,2})$/ms) {
+		($year, $month, $day) = ($1, $2, $3);
+	} else {
+		err 'Cannot parse date/time string.',
+			'Value' => $date,
+		;
+	}
+	my $dt = eval {
+		DateTime->new(
+			'year' => $year,
+			$month ? ('month' => $month) : (),
+			$day ? ('day' => $day) : (),
+		);
+	};
+	if ($EVAL_ERROR) {
+		err "Cannot construct DateTime object from date.",
+			'Value' => $date,
+			'DateTime error' => $EVAL_ERROR,
+		;
+	}
 
 	return $dt;
 }
@@ -286,6 +301,11 @@ Returns undef.
                  DateTime error: %s
 
  check_date_order():
+         Cannot parse date/time string.
+                 Value: %s
+         Cannot construct DateTime object from date.
+                 Value: %s
+                 DateTime error: %s
          Parameter '%s' has date greater or same as parameter '%s' date.
 
 =head1 EXAMPLE1

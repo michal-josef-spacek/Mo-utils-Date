@@ -5,7 +5,7 @@ use DateTime;
 use English;
 use Error::Pure::Utils qw(clean);
 use Mo::utils::Date qw(check_date_order);
-use Test::More 'tests' => 12;
+use Test::More 'tests' => 14;
 use Test::NoWarnings;
 
 # Test.
@@ -102,4 +102,28 @@ eval {
 };
 is($EVAL_ERROR, "Parameter 'date1' has date greater or same as parameter 'date2' date.\n",
 	"Parameter 'date1' has date same as parameter 'date2' date (DateTime objects).");
+clean();
+
+# Test.
+$self = {
+	'date1' => 'foo',
+	'date2' => 'bar',
+};
+eval {
+	check_date_order($self, 'date1', 'date2');
+};
+is($EVAL_ERROR, "Cannot parse date/time string.\n",
+	"Cannot parse date/time string (foo and bar).");
+clean();
+
+# Test.
+$self = {
+	'date1' => '2023-02-29', # not valid date
+	'date2' => '2024-02-29',
+};
+eval {
+	check_date_order($self, 'date1', 'date2');
+};
+is($EVAL_ERROR, "Cannot construct DateTime object from date.\n",
+	"Cannot construct DateTime object from date. (2023-02-29 and 2024-02-29).");
 clean();
